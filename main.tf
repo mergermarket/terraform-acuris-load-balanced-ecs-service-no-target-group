@@ -40,10 +40,10 @@ resource "aws_ecs_service" "service" {
     }
   }
 
+  force_new_deployment = true  
   lifecycle {
     create_before_destroy = true
     ignore_changes = [
-      capacity_provider_strategy,
       ordered_placement_strategy,
     ]
   }
@@ -118,10 +118,10 @@ resource "aws_ecs_service" "service_no_loadbalancer" {
     type = lower(var.pack_and_distinct) == "true" ? "distinctInstance" : "memberOf"
     expression = lower(var.pack_and_distinct) == "true" ? "" : "agentConnected == true"
   }
-  
+
+  force_new_deployment = true  
   lifecycle {
     ignore_changes = [
-      capacity_provider_strategy,
       ordered_placement_strategy,
     ]
   }
