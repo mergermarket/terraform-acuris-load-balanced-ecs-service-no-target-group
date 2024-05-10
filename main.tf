@@ -1,3 +1,13 @@
+locals {
+  
+tags = merge({
+     "component"              = var.release["component"]
+      "env"                   = var.release["env"]
+      "team"                  = var.release["team"]
+      "version"               = var.release["version"]
+  })
+}
+
 resource "aws_ecs_service" "service" {
   count = var.target_group_arn != "" ? 1 : 0
 
@@ -9,6 +19,7 @@ resource "aws_ecs_service" "service" {
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
   deployment_maximum_percent         = var.deployment_maximum_percent
   health_check_grace_period_seconds  = var.health_check_grace_period_seconds
+  tags                               = local.tags
 
   load_balancer {
     target_group_arn = var.target_group_arn
