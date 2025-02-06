@@ -22,6 +22,12 @@ variable "multiple_target_group_arns" {
   default     = []
 }
 
+variable "service_type" {
+    description = "Which of these 4 types of services are we creating? service (default) service_multiple_load_balancers, service_no_load_balancer, or service_for_awsvpc_no_loadbalancer"
+    type        = string
+    default     = ""
+}
+
 variable "cluster" {
   description = "The name of the ECS cluster to deploy the service to."
   type        = string
@@ -105,7 +111,7 @@ variable "pack_and_distinct" {
 }
 
 variable "network_configuration_subnets" {
-  description = "needed for network_mode awsvpc "
+  description = "needed for network_mode awsvpc"
   type        = list
   default     = []
 }
