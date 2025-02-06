@@ -22,12 +22,6 @@ variable "multiple_target_group_arns" {
   default     = []
 }
 
-variable "network_configuration_subnets" {
-  description = "needed for network_mode awsvpc"
-  type        = list
-  default     = []
-}
-
 variable "service_type" {
     description = "Which of these 4 types of services are we creating? service (default) service_multiple_load_balancers, service_no_load_balancer, or service_for_awsvpc_no_loadbalancer"
     type        = string
@@ -108,6 +102,12 @@ variable "deployment_minimum_healthy_percent" {
 variable "deployment_maximum_percent" {
   description = "The maximumPercent parameter represents an upper limit on the number of your service's tasks that are allowed in the RUNNING or PENDING state during a deployment, as a percentage of the desiredCount (rounded down to the nearest integer)."
   default     = "200"
+}
+
+variable "network_configuration_subnets" {
+  description = "needed for network_mode awsvpc"
+  type        = list
+  default     = []
 }
 
 variable "pack_and_distinct" {
