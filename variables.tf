@@ -13,13 +13,24 @@ variable "task_definition" {
 variable "target_group_arn" {
   description = "The target group ARN"
   type        = string
-  default     = ""
 }
 
 variable "multiple_target_group_arns" {
   description = "Mutiple target group ARNs to allow connection to multiple loadbalancers"
   type        = list
   default     = []
+}
+
+variable "network_configuration_subnets" {
+  description = "needed for network_mode awsvpc"
+  type        = list
+  default     = []
+}
+
+variable "service_type" {
+    description = "Which of these 4 types of services are we creating? service (default) service_multiple_load_balancers, service_no_load_balancer, or service_for_awsvpc_no_loadbalancer"
+    type        = string
+    default     = ""
 }
 
 variable "cluster" {
@@ -102,12 +113,6 @@ variable "pack_and_distinct" {
   description = "Enable distinct instance and task binpacking for better cluster utilisation. Enter 'true' for clusters with auto scaling groups. Enter 'false' for clusters with no ASG and instant counts less than or equal to desired tasks"
   type = string
   default = "false"
-}
-
-variable "network_configuration_subnets" {
-  description = "needed for network_mode awsvpc "
-  type        = list
-  default     = []
 }
 
 variable "network_configuration_security_groups" {
