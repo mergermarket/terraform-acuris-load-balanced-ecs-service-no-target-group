@@ -13,6 +13,7 @@ variable "task_definition" {
 variable "target_group_arn" {
   description = "The target group ARN"
   type        = string
+  default     = ""
 }
 
 variable "multiple_target_group_arns" {
