@@ -1,5 +1,5 @@
 resource "aws_ecs_service" "service" {
-  count = var.service_type == "service" ? 1 : 0
+  count = var.target_group_arn != "" ? 1 : 0
 
   name                               = var.name
   cluster                            = var.cluster
@@ -51,7 +51,7 @@ resource "aws_ecs_service" "service" {
 }
 
 resource "aws_ecs_service" "service_multiple_loadbalancers" {
-  count = var.service_type == "service_multiple_load_balancers" ? 1 : 0
+  count = var.target_group_arn == "" && length(var.multiple_target_group_arns) > 0 ? 1 : 0
 
   name                               = var.name
   cluster                            = var.cluster
@@ -105,7 +105,7 @@ resource "aws_ecs_service" "service_multiple_loadbalancers" {
 }
 
 resource "aws_ecs_service" "service_no_loadbalancer" {
-  count = var.service_type == "service_no_load_balancer" ? 1 : 0
+  count = var.target_group_arn == "" && length(var.network_configuration_subnets) == 0 && length(var.multiple_target_group_arns) == 0  ? 1 : 0
 
   name                               = var.name
   cluster                            = var.cluster
@@ -149,7 +149,7 @@ resource "aws_ecs_service" "service_no_loadbalancer" {
 }
 
 resource "aws_ecs_service" "service_for_awsvpc_no_loadbalancer" {
-  count = var.service_type == "service_for_awsvpc_no_loadbalancer" ? 1 : 0
+  count = var.target_group_arn == "" && length(var.network_configuration_subnets) > 0 ? 1 : 0
 
   name                               = var.name
   cluster                            = var.cluster
