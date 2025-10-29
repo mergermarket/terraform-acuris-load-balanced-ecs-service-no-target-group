@@ -11,6 +11,7 @@ resource "aws_ecs_service" "service" {
   health_check_grace_period_seconds  = var.health_check_grace_period_seconds
   enable_execute_command             = true
   tags                               = var.tags
+  propagate_tags                     = "SERVICE"
 
   load_balancer {
     target_group_arn = var.target_group_arn
@@ -62,7 +63,8 @@ resource "aws_ecs_service" "service_multiple_loadbalancers" {
   deployment_maximum_percent         = var.deployment_maximum_percent
   health_check_grace_period_seconds  = var.health_check_grace_period_seconds
   enable_execute_command             = true
-  tags                               = var.tags 
+  tags                               = var.tags
+  propagate_tags                     = "SERVICE"
 
   dynamic "load_balancer" {
     for_each = var.multiple_target_group_arns
@@ -118,6 +120,7 @@ resource "aws_ecs_service" "service_no_loadbalancer" {
   health_check_grace_period_seconds  = var.health_check_grace_period_seconds
   enable_execute_command             = true
   tags                               = var.tags
+  propagate_tags                     = "SERVICE" 
 
   ordered_placement_strategy {
     type  = "spread"
@@ -163,6 +166,7 @@ resource "aws_ecs_service" "service_for_awsvpc_no_loadbalancer" {
   health_check_grace_period_seconds  = var.health_check_grace_period_seconds
   enable_execute_command             = true
   tags                               = var.tags 
+  propagate_tags                     = "SERVICE"
 
   network_configuration {
     subnets         = var.network_configuration_subnets
