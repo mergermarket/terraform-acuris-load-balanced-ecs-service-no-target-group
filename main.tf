@@ -19,19 +19,23 @@ resource "aws_ecs_service" "service" {
     container_port   = var.container_port
   }
 
+  # 1. High Availability: Spread across AZs
   ordered_placement_strategy {
     type  = "spread"
     field = "attribute:ecs.availability-zone"
   }
-  
+
+  # 2. Efficiency: Pack tasks onto instances with the least available memory
   ordered_placement_strategy {
-    type  = lower(var.pack_and_distinct) == "true" ? "binpack" : "spread"
-    field = lower(var.pack_and_distinct) == "true" ? "cpu" : "instanceId"
+    type  = "binpack"
+    field = "memory"
   }
 
+  # 3. Flexible Constraints
+  # Removed distinctInstance to allow multiple tasks per host
   placement_constraints {
-    type = lower(var.pack_and_distinct) == "true" ? "distinctInstance" : "memberOf"
-    expression = lower(var.pack_and_distinct) == "true" ? "" : "agentConnected == true"
+    type       = "memberOf"
+    expression = "agentConnected == true"
   }
 
   dynamic capacity_provider_strategy {
