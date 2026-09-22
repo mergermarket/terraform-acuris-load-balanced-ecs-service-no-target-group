@@ -47,6 +47,16 @@ resource "aws_ecs_service" "service" {
     }
   }
 
+  dynamic "volume_configuration" {
+    for_each = length(var.ephemeral_ebs_volume.name) > 0 ? [var.ephemeral_ebs_volume] : []
+    content {
+      name = volume_configuration.value.name
+      managed_ebs_volume {
+        role_arn = volume_configuration.value.infrastructure_role_arn
+      }
+    }
+  }
+
   force_new_deployment = true  
   lifecycle {
     create_before_destroy = true
@@ -107,6 +117,16 @@ resource "aws_ecs_service" "service_multiple_loadbalancers" {
     }
   }
 
+  dynamic "volume_configuration" {
+    for_each = length(var.ephemeral_ebs_volume.name) > 0 ? [var.ephemeral_ebs_volume] : []
+    content {
+      name = volume_configuration.value.name
+      managed_ebs_volume {
+        role_arn = volume_configuration.value.infrastructure_role_arn
+      }
+    }
+  }
+
   force_new_deployment = true  
   lifecycle {
     create_before_destroy = true
@@ -155,6 +175,16 @@ resource "aws_ecs_service" "service_no_loadbalancer" {
       base = 0
       capacity_provider = capacity_provider_strategy.value["capacity_provider"]
       weight = capacity_provider_strategy.value["weight"]
+    }
+  }
+
+  dynamic "volume_configuration" {
+    for_each = length(var.ephemeral_ebs_volume.name) > 0 ? [var.ephemeral_ebs_volume] : []
+    content {
+      name = volume_configuration.value.name
+      managed_ebs_volume {
+        role_arn = volume_configuration.value.infrastructure_role_arn
+      }
     }
   }
 
