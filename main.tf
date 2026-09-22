@@ -52,7 +52,8 @@ resource "aws_ecs_service" "service" {
     content {
       name = volume_configuration.value.name
       managed_ebs_volume {
-        role_arn = volume_configuration.value.infrastructure_role_arn
+        role_arn = aws_iam_role.role.arn
+        size_in_gb = volume_configuration.value.size_in_gib
       }
     }
   }
@@ -122,7 +123,8 @@ resource "aws_ecs_service" "service_multiple_loadbalancers" {
     content {
       name = volume_configuration.value.name
       managed_ebs_volume {
-        role_arn = volume_configuration.value.infrastructure_role_arn
+        role_arn = aws_iam_role.role.arn
+        size_in_gb = volume_configuration.value.size_in_gib
       }
     }
   }
@@ -183,7 +185,8 @@ resource "aws_ecs_service" "service_no_loadbalancer" {
     content {
       name = volume_configuration.value.name
       managed_ebs_volume {
-        role_arn = volume_configuration.value.infrastructure_role_arn
+        role_arn = aws_iam_role.role.arn
+        size_in_gb = volume_configuration.value.size_in_gib
       }
     }
   }

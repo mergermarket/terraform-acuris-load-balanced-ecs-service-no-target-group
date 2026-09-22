@@ -136,6 +136,6 @@ variable "tags" {
 
 variable "ephemeral_ebs_volume" {
   description = "ephemeral EBS volume to define in service"
-  type = object({ name: string, infrastructure_role_arn: string, size_in_gib: number })
-  default = { name = "", infrastructure_role_arn = "", size_in_gib = 50 }
+  type = object({ name: string, size_in_gib: number })
+  default = { name = "", size_in_gib = 50 }
 }
